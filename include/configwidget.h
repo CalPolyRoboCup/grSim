@@ -44,6 +44,8 @@ Copyright (C) 2011, Parsian Robotic Center (eew.aut.ac.ir/~parsian/grsim)
 
 using namespace VarTypes;
 
+#define CONFIG_MIN_ROBOTS 1
+#define CONFIG_MAX_ROBOTS 12
 
 #ifdef HAVE_MACOSX
 
@@ -65,6 +67,10 @@ using namespace VarTypes;
 #define DEF_VALUE(type,Type,name)  \
             std::tr1::shared_ptr<VarTypes::Var##Type> v_##name; \
             inline type name() {return v_##name->get##Type();}
+
+#define DEF_VALUE_LIMITED(type,Type,name,min,max) \
+            std::tr1::shared_ptr<VarTypes::Var##Type> v_##name; \
+            inline type name() {type v = v_##name->get##Type(); return v < min ? min : v > max ? max : v;}
 
 #define DEF_FIELD_VALUE(type,Type,name)  \
             std::tr1::shared_ptr<VarTypes::Var##Type> v_DivA_##name; \
@@ -133,7 +139,7 @@ public:
 
   /*    Geometry/Game Vartypes   */
   DEF_ENUM(std::string, Division)
-  DEF_VALUE(int, Int, Robots_Count)
+  DEF_VALUE_LIMITED(int, Int, Robots_Count, CONFIG_MIN_ROBOTS, CONFIG_MAX_ROBOTS)
   DEF_FIELD_VALUE(double,Double,Field_Line_Width)
   DEF_FIELD_VALUE(double,Double,Field_Length)
   DEF_FIELD_VALUE(double,Double,Field_Width)

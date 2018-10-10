@@ -1,5 +1,7 @@
 .DS_STORE
 build*/*
+debug*/*
+release*/*
 dist/*
 bin*/*
 *.user

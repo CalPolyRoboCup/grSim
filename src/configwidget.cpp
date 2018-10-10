@@ -56,7 +56,10 @@ ConfigWidget::ConfigWidget()
   ADD_TO_ENUM(Division, "Division A");
   ADD_TO_ENUM(Division, "Division B");
   END_ENUM(game_vars, Division);
-  ADD_VALUE(game_vars,Int, Robots_Count, 8, "Robots Count")
+
+  v_Robots_Count = std::tr1::shared_ptr<VarInt>(new VarInt("Robots Count", 8, CONFIG_MIN_ROBOTS, CONFIG_MAX_ROBOTS));
+  game_vars->addChild(v_Robots_Count);
+
   VarListPtr fields_vars(new VarList("Field"));
   VarListPtr div_a_vars(new VarList("Division A"));
   VarListPtr div_b_vars(new VarList("Division B"));
